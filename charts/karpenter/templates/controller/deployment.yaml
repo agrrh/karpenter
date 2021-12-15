@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: karpenter-metrics
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.controller.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
     - port: 8080
@@ -15,6 +19,10 @@ kind: Deployment
 metadata:
   name: karpenter-controller
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.controller.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.controller.replicas }}
   strategy:
