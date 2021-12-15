@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: karpenter-webhook
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.webhook.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
     - port: 443
@@ -15,6 +19,10 @@ kind: Deployment
 metadata:
   name: karpenter-webhook
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.webhook.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.webhook.replicas }}
   strategy:
